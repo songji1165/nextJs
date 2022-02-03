@@ -5,6 +5,8 @@ import {useRouter} from "next/router";
 export default function Home({results}) {
     const router = useRouter();
     const onClick = (movie) => {
+        router.push(`movies/${movie.original_title}/${movie.id}`);
+        /*
         router.push({
                 pathname: `/movies/${movie.id}`,
                 query   : {
@@ -13,6 +15,7 @@ export default function Home({results}) {
             },
             `/movies/${movie.id}` // nextjs Router.as : url 마스킹
         );
+         */
         /* example <Link>
              <Link
                 href={{
