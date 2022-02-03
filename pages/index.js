@@ -1,30 +1,16 @@
 import Seo from "../components/Seo";
-import {useEffect, useState} from "react";
 
 
-export default function Home() {
-    const [movies, setMovies] = useState([]);
-    useEffect(() => {
-        (async () => {
-            const {results} = await (await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}`)).json();
-            console.log("DATA : ", results);
-            if (results) {
-                setMovies(results);
-            }
-        })();
-    }, []);
+export default function Home({results}) {
     return (
         <div className="container">
             <Seo title="home"/>
-            <div>
-                {!movies && <h4>Loading...</h4>}
-                {movies?.map((movie, idx) => {
+                {results?.map((movie, idx) => {
                     return (<div className="movie" key={movie.id}>
                         <img src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}/>
                         <h4>{movie.original_title}</h4>
                     </div>);
                 })}
-            </div>
             <style jsx>{`
             .container {
               display: grid;
@@ -48,4 +34,16 @@ export default function Home() {
       `}
             </style>
         </div>);
+}
+
+// 서버에서만 돌아가는 코드 (SSR)
+export async function getServerSideProps() {
+    // next-rewrite 사용하는 경우 : localhost:3000/api/movies (client 인 경우 , "/api/movies" )
+    const {results} = await (await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${process.env.API_KEY}`)).json();
+    console.log("results : ", results);
+    return {
+        props: {
+            results
+        }
+    }
 }
