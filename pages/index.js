@@ -1,12 +1,29 @@
 import Seo from "../components/Seo";
-import Link from "next/link"
 import {useRouter} from "next/router";
 
 
 export default function Home({results}) {
     const router = useRouter();
-    const onClick = (id) => {
-        router.push(`/movies/${id}`);
+    const onClick = (movie) => {
+        router.push({
+                pathname: `/movies/${movie.id}`,
+                query   : {
+                    title: movie.original_title
+                }
+            },
+            `/movies/${movie.id}` // nextjs Router.as : url 마스킹
+        );
+        /* example <Link>
+             <Link
+                href={{
+                   pathname: `/movies/${movie.id}`,
+                    query   : {
+                        title: movie.original_title
+                    }
+                }}
+                as={`/movies/${movie.id}`}>
+             </Link>
+        */
     };
 
     return (
@@ -14,7 +31,7 @@ export default function Home({results}) {
             <Seo title="home"/>
             {results?.map((movie, idx) => {
                 return (
-                    <div onClick={() => onClick(movie.id)} className="movie" key={movie.id}>
+                    <div onClick={() => onClick(movie)} className="movie" key={movie.id}>
                         <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}/>
                         <h4>{movie.original_title}</h4>
                     </div>
