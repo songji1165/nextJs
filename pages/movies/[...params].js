@@ -1,9 +1,9 @@
 import {useRouter} from "next/router";
 
-export default function Detail(){
+export default function Detail({params}){
     const router = useRouter();
-
-    const [title, id] = router.query.params || []; // <-- 단순 csr 에러 잡기 위함 [] 추가하기
+console.log("PARAMS?", params);
+    const [title, id] = params || []; // <-- 단순 csr 에러 잡기 위함 [] 추가하기
     return (
         <div>
             <h4>
@@ -13,11 +13,11 @@ export default function Detail(){
     )
 }
 
-// 서버에서만 돌아가는 코드 (SSR)
-// export async function getServerSideProps({params: params}) {
-//     return {
-//         props: {
-//             params
-//         }
-//     }
-// }
+export async function getServerSideProps({params: {params}}) {
+    console.log(params);
+    return {
+        props: {
+            params: params
+        }
+    }
+}
