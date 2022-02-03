@@ -1,33 +1,47 @@
 import Link from "next/link"
 import {useRouter} from "next/router";
 
-/** NextJs : Styled Jsx (nextjs만 지원해주는 방법)
- * - 컴포넌트 단위로 독립적 (Scoped)
- *      - 다른 컴포넌트의 동일 클래스 이름을 신경쓰지 않아도 됨
- * - import 가 필요 없음
-*/
 export default function NavBar() {
     const router = useRouter(); // nextJs 가 제공해주는 router (nextJs에 이미 내장되어있긴 때문에, install이 필요없다)
-    console.log("NextJs Router - location 정보 제공: ", router);
-
     const props = {
-        color : 'tomato'
+        color: 'tomato'
     };
-
-    return (<nav>
-        <Link href="/">
-            <a className={router.pathname === "/" ? "active" : ""}>Home</a>
-        </Link>
-        <Link href="/about">
-            <a className={router.pathname === "/about" ? "active" : ""}>About</a>
-        </Link>
+    return (
+        <nav>
+            <img src="/vercel.svg"/>
+            <Link href="/">
+                <a className={router.pathname === "/" ? "active" : ""}>Home</a>
+            </Link>
+            <Link href="/about">
+                <a className={router.pathname === "/about" ? "active" : ""}>About</a>
+            </Link>
         <style jsx>{`
-            a{
-                text-decoration: none;
+             nav {
+              display: flex;
+              gap: 10px;
+              flex-direction: column;
+              align-items: center;
+              padding-top: 20px;
+              padding-bottom: 10px;
+              box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+                rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
             }
-            .active{
-                color: ${props.color};
+            img {
+              max-width: 100px;
+              margin-bottom: 5px;
             }
-        `}</style>
+            nav a {
+              font-weight: 600;
+              font-size: 18px;
+            }
+            a.active {
+              color: ${props.color};
+            }
+            nav div {
+              display: flex;
+              gap: 10px;
+            }
+        `}
+        </style>
     </nav>)
 }
