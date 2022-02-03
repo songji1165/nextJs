@@ -31,25 +31,3 @@ export default function NavBar() {
         `}</style>
     </nav>)
 }
-
-
-/* NextJs : Css 모듈로 스타일 추가하는 방법
-
-import styles from "./Navbar.module.css";
-
-export default function NavBar() {
-    const router = useRouter(); // nextJs 가 제공해주는 router (nextJs에 이미 내장되어있긴 때문에, install이 필요없다)
-    console.log("NextJs Router - location 정보 제공: ", router);
-    return (<nav>
-            <Link href="/">
-                <a className={`${styles.link} ${router.pathname === "/" ? styles.active : ""}`}>Home</a>
-            </Link>
-            <Link href="/about">
-                <a className={[
-                    styles.link,
-                    router.pathname === "/about" ? styles.active : ""
-                ].join(" ")}>About</a>
-            </Link>
-        </nav>)
-}
- */
